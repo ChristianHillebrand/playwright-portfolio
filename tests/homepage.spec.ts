@@ -161,12 +161,8 @@ test('contact form rejects an invalid email address', async ({ contactPage }) =>
 
 
 
-
-
-test('contact form accepts valid input after validation errors', async ({ page }) => {
-  await openContactPage(page);
-
-  const contactForm = page.locator('form.everest-form');
+test('contact form accepts valid input after validation errors', async ({ contactPage }) => {
+  const contactForm = contactPage.locator('form.everest-form');
   const submitButton = contactForm.locator('button[type="submit"]');
 
   const textFields = contactForm.locator('input[type="text"]');
@@ -176,7 +172,7 @@ test('contact form accepts valid input after validation errors', async ({ page }
   // Submit the empty form to trigger validation errors.
   await submitButton.click();
 
-  // Confirm that the validation errors appear.
+  // Confirm that validation errors appear.
   await expect(
     contactForm.getByText('This field is required.', { exact: true })
   ).toHaveCount(2);
@@ -196,7 +192,7 @@ test('contact form accepts valid input after validation errors', async ({ page }
   // Submit the completed form.
   await submitButton.click();
 
-  // Verify that the validation errors are gone.
+  // Verify that the validation errors disappear.
   await expect(
     contactForm.getByText('This field is required.', { exact: true })
   ).toHaveCount(0);
@@ -207,6 +203,7 @@ test('contact form accepts valid input after validation errors', async ({ page }
     })
   ).toHaveCount(0);
 });
+
 
 
 async function openContactPage(page: Page) {
