@@ -1,5 +1,5 @@
 
-import { test, expect } from '@playwright/test';
+import { test, expect, type Page } from '@playwright/test';
 
 test('homepage displays the expected title', async ({ page }) => {
   await page.goto('https://practice.sdetunicorns.com/');
@@ -25,7 +25,7 @@ test('About link opens the About page', async ({ page }) => {
 
 
 test('contact form has visible input fields', async ({ page }) => {
-  await page.goto('https://practice.sdetunicorns.com/contact/');
+  await openContactPage(page);
 
   const contactForm = page.locator('form.everest-form');
 
@@ -42,7 +42,7 @@ test('contact form has visible input fields', async ({ page }) => {
 });
 
 test('contact page displays the contact form', async ({ page }) => {
-  await page.goto('https://practice.sdetunicorns.com/contact/');
+  await openContactPage(page);
 
   await expect(page).toHaveURL(/contact/);
 
@@ -52,7 +52,7 @@ test('contact page displays the contact form', async ({ page }) => {
 });
 
 test('contact form submit button is visible and enabled', async ({ page }) => {
-  await page.goto('https://practice.sdetunicorns.com/contact/');
+  await openContactPage(page);
 
   const contactForm = page.locator('form.everest-form');
   const submitButton = contactForm.locator('button[type="submit"]');
@@ -63,7 +63,7 @@ test('contact form submit button is visible and enabled', async ({ page }) => {
 
 
 test('contact form fields accept user input', async ({ page }) => {
-  await page.goto('https://practice.sdetunicorns.com/contact/');
+  await openContactPage(page);
 
   const contactForm = page.locator('form.everest-form');
 
@@ -102,7 +102,7 @@ test('Contact link opens the Contact page', async ({ page }) => {
 
 
 test('contact form displays validation errors for empty required fields', async ({ page }) => {
-  await page.goto('https://practice.sdetunicorns.com/contact/');
+  await openContactPage(page);
 
   const contactForm = page.locator('form.everest-form');
   const submitButton = contactForm.locator('button[type="submit"]');
@@ -133,7 +133,7 @@ test('contact form displays validation errors for empty required fields', async 
 });
 
 test('contact form rejects an invalid email address', async ({ page }) => {
-  await page.goto('https://practice.sdetunicorns.com/contact/');
+  await openContactPage(page);
 
   const contactForm = page.locator('form.everest-form');
   const submitButton = contactForm.locator('button[type="submit"]');
@@ -170,7 +170,7 @@ test('contact form rejects an invalid email address', async ({ page }) => {
 
 
 test('contact form accepts valid input after validation errors', async ({ page }) => {
-  await page.goto('https://practice.sdetunicorns.com/contact/');
+  await openContactPage(page);
 
   const contactForm = page.locator('form.everest-form');
   const submitButton = contactForm.locator('button[type="submit"]');
@@ -214,3 +214,7 @@ test('contact form accepts valid input after validation errors', async ({ page }
   ).toHaveCount(0);
 });
 
+
+async function openContactPage(page: Page) {
+  await page.goto('https://practice.sdetunicorns.com/contact/');
+}
