@@ -50,16 +50,13 @@ test('contact page displays the contact form', async ({ contactPage }) => {
 });
 
 
-test('contact form submit button is visible and enabled', async ({ page }) => {
-  await openContactPage(page);
-
-  const contactForm = page.locator('form.everest-form');
+test('contact form submit button is visible and enabled', async ({ contactPage }) => {
+  const contactForm = contactPage.locator('form.everest-form');
   const submitButton = contactForm.locator('button[type="submit"]');
 
   await expect(submitButton).toBeVisible();
   await expect(submitButton).toBeEnabled();
 });
-
 
 test('contact form fields accept user input', async ({ contactPage }) => {
   const contactForm = contactPage.locator('form.everest-form');
