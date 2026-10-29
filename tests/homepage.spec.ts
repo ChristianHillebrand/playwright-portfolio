@@ -95,15 +95,13 @@ test('Contact link opens the Contact page', async ({ page }) => {
 });
 
 
-test('contact form displays validation errors for empty required fields', async ({ page }) => {
-  await openContactPage(page);
-
-  const contactForm = page.locator('form.everest-form');
+test('contact form displays validation errors for empty required fields', async ({ contactPage }) => {
+  const contactForm = contactPage.locator('form.everest-form');
   const submitButton = contactForm.locator('button[type="submit"]');
 
   await expect(contactForm).toBeVisible();
 
-  // Submit the form without entering any data.
+  // Submit the empty form to trigger validation errors.
   await submitButton.click();
 
   // Find the validation messages.
@@ -125,6 +123,8 @@ test('contact form displays validation errors for empty required fields', async 
   // Verify that the email validation error appears.
   await expect(emailValidationError).toBeVisible();
 });
+
+
 
 test('contact form rejects an invalid email address', async ({ page }) => {
   await openContactPage(page);
