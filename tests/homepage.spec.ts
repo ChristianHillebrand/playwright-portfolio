@@ -1,5 +1,6 @@
 
-import { test, expect, type Page } from '@playwright/test';
+import { test, expect } from './fixtures';
+import type { Page } from '@playwright/test';
 
 test('homepage displays the expected title', async ({ page }) => {
   await page.goto('https://practice.sdetunicorns.com/');
@@ -24,10 +25,8 @@ test('About link opens the About page', async ({ page }) => {
 
 
 
-test('contact form has visible input fields', async ({ page }) => {
-  await openContactPage(page);
-
-  const contactForm = page.locator('form.everest-form');
+test('contact form has visible input fields', async ({ contactPage }) => {
+  const contactForm = contactPage.locator('form.everest-form');
 
   await expect(contactForm).toBeVisible();
 
@@ -41,15 +40,15 @@ test('contact form has visible input fields', async ({ page }) => {
   await expect(messageField).toBeVisible();
 });
 
-test('contact page displays the contact form', async ({ page }) => {
-  await openContactPage(page);
 
-  await expect(page).toHaveURL(/contact/);
+test('contact page displays the contact form', async ({ contactPage }) => {
+  await expect(contactPage).toHaveURL(/contact/);
 
-  const contactForm = page.locator('form.everest-form');
+  const contactForm = contactPage.locator('form.everest-form');
 
   await expect(contactForm).toBeVisible();
 });
+
 
 test('contact form submit button is visible and enabled', async ({ page }) => {
   await openContactPage(page);
