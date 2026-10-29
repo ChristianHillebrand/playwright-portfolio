@@ -100,3 +100,24 @@ test('Contact link opens the Contact page', async ({ page }) => {
   await expect(page).toHaveURL(/\/contact\/?$/);
 });
 
+
+test('contact form required fields are validated', async ({ page }) => {
+  await page.goto('https://practice.sdetunicorns.com/contact/');
+
+  const contactForm = page.locator('form.everest-form');
+  const submitButton = contactForm.locator('button[type="submit"]');
+
+  await expect(contactForm).toBeVisible();
+  await expect(submitButton).toBeEnabled();
+
+  await submitButton.click();
+
+  const requiredFields = contactForm.locator('[required]');
+  const requiredFieldCount = await requiredFields.count();
+
+  expect(requiredFieldCount).toBeGreaterThan(0);
+
+  for (let i = 0; i < requiredFieldCount; i++) {
+    await expect(requiredFields.nth(i)).toHaveAttribute('required', '');
+  }
+});
