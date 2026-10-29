@@ -169,3 +169,48 @@ test('contact form rejects an invalid email address', async ({ page }) => {
 });
 
 
+test('contact form accepts valid input after validation errors', async ({ page }) => {
+  await page.goto('https://practice.sdetunicorns.com/contact/');
+
+  const contactForm = page.locator('form.everest-form');
+  const submitButton = contactForm.locator('button[type="submit"]');
+
+  const textFields = contactForm.locator('input[type="text"]');
+  const emailField = contactForm.locator('input[type="email"]');
+  const messageField = contactForm.locator('textarea');
+
+  // Submit the empty form to trigger validation errors.
+  await submitButton.click();
+
+  // Confirm that the validation errors appear.
+  await expect(
+    contactForm.getByText('This field is required.', { exact: true })
+  ).toHaveCount(2);
+
+  await expect(
+    contactForm.getByText('Please enter a valid email address.', {
+      exact: true
+    })
+  ).toBeVisible();
+
+  // Enter valid test data.
+  await textFields.nth(0).fill('Chris Test');
+  await emailField.fill('chris.test@example.com');
+  await textFields.nth(1).fill('2525550123');
+  await messageField.fill('Testing successful form validation.');
+
+  // Submit the completed form.
+  await submitButton.click();
+
+  // Verify that the validation errors are gone.
+  await expect(
+    contactForm.getByText('This field is required.', { exact: true })
+  ).toHaveCount(0);
+
+  await expect(
+    contactForm.getByText('Please enter a valid email address.', {
+      exact: true
+    })
+  ).toHaveCount(0);
+});
+
