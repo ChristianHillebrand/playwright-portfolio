@@ -41,6 +41,25 @@ test('contact form has visible input fields', async ({ page }) => {
   await expect(messageField).toBeVisible();
 });
 
+test('contact page displays the contact form', async ({ page }) => {
+  await page.goto('https://practice.sdetunicorns.com/contact/');
+
+  await expect(page).toHaveURL(/contact/);
+
+  const contactForm = page.locator('form.everest-form');
+
+  await expect(contactForm).toBeVisible();
+});
+
+test('contact form submit button is visible and enabled', async ({ page }) => {
+  await page.goto('https://practice.sdetunicorns.com/contact/');
+
+  const contactForm = page.locator('form.everest-form');
+  const submitButton = contactForm.locator('button[type="submit"]');
+
+  await expect(submitButton).toBeVisible();
+  await expect(submitButton).toBeEnabled();
+});
 
 
 test('contact form fields accept user input', async ({ page }) => {
@@ -66,22 +85,18 @@ test('contact form fields accept user input', async ({ page }) => {
 });
 
 
-test('contact page displays the contact form', async ({ page }) => {
-  await page.goto('https://practice.sdetunicorns.com/contact/');
+test('Contact link opens the Contact page', async ({ page }) => {
+  await page.goto('https://practice.sdetunicorns.com/');
 
-  await expect(page).toHaveURL(/contact/);
+  const contactLink = page.getByRole('link', {
+    name: 'Contact',
+    exact: true
+  }).first();
 
-  const contactForm = page.locator('form.everest-form');
+  await expect(contactLink).toBeVisible();
 
-  await expect(contactForm).toBeVisible();
+  await contactLink.click();
+
+  await expect(page).toHaveURL(/\/contact\/?$/);
 });
 
-test('contact form submit button is visible and enabled', async ({ page }) => {
-  await page.goto('https://practice.sdetunicorns.com/contact/');
-
-  const contactForm = page.locator('form.everest-form');
-  const submitButton = contactForm.locator('button[type="submit"]');
-
-  await expect(submitButton).toBeVisible();
-  await expect(submitButton).toBeEnabled();
-});
