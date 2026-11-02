@@ -1,11 +1,14 @@
 import { defineConfig } from '@playwright/test';
 
 export default defineConfig({
-  testDir: './tests',
+  testDir: './',
 
   fullyParallel: true,
 
-  reporter: 'html',
+  reporter: [
+  ['list'],
+  ['html', { open: 'never' }]
+],
 
   use: {
     baseURL: 'https://practice.sdetunicorns.com',
