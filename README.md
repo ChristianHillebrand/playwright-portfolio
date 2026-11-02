@@ -1,62 +1,127 @@
-# Playwright QA Automation Portfolio
 
-## About This Project
+# Playwright Automation Portfolio
 
-This project demonstrates my hands-on development of automated software testing using Playwright and TypeScript.
+A hands-on software test automation portfolio demonstrating UI testing, REST API testing, TypeScript, Playwright fixtures, Page Object Model (POM), reusable test data, and automated test reporting.
 
-With 21 years of experience in Quality Assurance and customer support, I am expanding my technical capabilities into browser automation and modern QA engineering practices.
+**GitHub Repository:** https://github.com/ChristianHillebrand/playwright-portfolio
 
-The project focuses on practical UI automation, functional testing, form validation, navigation, and reusable test architecture using the Page Object Model (POM).
+## Project Overview
 
-## Technologies
+This project demonstrates practical automation testing techniques using Playwright with TypeScript.
 
-- Playwright Test
+The portfolio includes browser-based UI tests and REST API tests, with an emphasis on reusable code, maintainable test architecture, and reliable test execution.
+
+The project uses a practice e-commerce website and a demo REST API.
+
+## Technologies & Tools
+
+- Playwright
 - TypeScript
+- JavaScript
 - Node.js
+- REST API Testing
 - Git and GitHub
 - Visual Studio Code
+- HTML Test Reporting
+
+## Project Structure
+
+```text
+playwright-portfolio/
+│
+├── api-tests/
+│   ├── posts.spec.ts
+│   └── test-data/
+│       └── posts.data.ts
+│
+├── pages/
+│   └── ContactPage.ts
+│
+├── tests/
+│   ├── test-data/
+│   │   └── contact.data.ts
+│   ├── fixtures.ts
+│   ├── contact.spec.ts
+│   └── homepage.spec.ts
+│
+├── playwright.config.ts
+├── package.json
+└── .gitignore
+```
 
 ## Automated Test Coverage
 
-The current test suite contains **10 automated UI tests** covering the following scenarios:
+**24 automated tests currently passing**
 
-### Homepage Testing
-1. **Homepage title validation** – verifies that the homepage displays the expected title.
-2. **Navigation testing** – verifies that the About link opens the correct page.
+### 1. API Automation — 14 Tests
 
-### Contact Page and Form Testing
-3. **Contact page validation** – verifies that the contact form is displayed.
-4. **Form field visibility** – verifies that all expected input fields are visible.
-5. **Input testing** – enters sample data and verifies that the fields contain the expected values.
-6. **Submit button validation** – verifies that the submit button is visible and enabled.
-7. **Contact navigation** – verifies that the Contact link opens the Contact page.
-8. **Required-field validation** – verifies that appropriate validation errors appear when required fields are empty.
-9. **Invalid email validation** – verifies that the form rejects an invalid email address.
-10. **Successful form validation and submission** – verifies that validation errors disappear and the expected confirmation message appears after valid information is submitted.
+Using the JSONPlaceholder demo REST API:
 
-## Test Architecture
+- GET requests and response validation
+- POST requests and new record creation
+- PUT requests and record updates
+- DELETE requests
+- HTTP status-code validation
+- Response content-type validation
+- Required response-property validation
+- Data-driven API testing
+- Testing API behavior with missing fields
+- Testing API behavior with incorrect data types
 
-This project uses the **Page Object Model (POM)** to organize and maintain automated tests.
+**Note:** JSONPlaceholder is a simulated API. Its write operations do not persist data, and it accepts some incomplete or incorrectly typed payloads. The related tests document that behavior rather than demonstrate strict server-side validation.
 
-Key components include:
+### 2. Contact Page UI Automation — 8 Tests
 
-- `pages/ContactPage.ts` – centralizes contact page locators and navigation.
-- `tests/fixtures.ts` – provides reusable test setup and the ContactPage object.
-- `tests/contact.spec.ts` – contains contact form and validation tests.
-- `tests/homepage.spec.ts` – contains homepage and navigation tests.
-- `playwright.config.ts` – defines Playwright test configuration.
+- Contact form visibility
+- Contact page navigation
+- Submit button visibility and enabled state
+- Form field input validation
+- Required-field validation
+- Invalid email validation
+- Successful form submission
+- Validation error handling
 
-This structure separates page interactions from test logic, improving readability, reusability, and maintainability.
+### 3. Homepage UI Automation — 2 Tests
 
-## How to Run the Tests
+- Homepage title verification
+- About page navigation
 
-### Prerequisites
+## Automation Architecture
 
-- Node.js and npm
-- Git
-- Visual Studio Code (recommended)
+### Page Object Model (POM)
 
-### Installation
+Implemented a reusable `ContactPage` class to centralize page locators and navigation methods.
+
+### Custom Playwright Fixtures
+
+Implemented custom fixtures to initialize reusable page objects and navigate to the required application page.
+
+### Reusable Test Data
+
+Separated test data from test logic using dedicated data files for API and UI testing.
+
+### TypeScript Interfaces
+
+Implemented interfaces to define and enforce consistent test-data structures.
+
+### Playwright Lifecycle Hooks
+
+Demonstrated all four major lifecycle hooks:
+
+- `beforeAll()`
+- `beforeEach()`
+- `afterEach()`
+- `afterAll()`
+
+### Parallel Test Execution
+
+Configured Playwright to support parallel execution using multiple workers.
+
+### HTML Reporting
+
+Configured Playwright's HTML reporter to generate test execution reports.
+
+## Running the Tests
 
 Clone the repository:
 
@@ -64,13 +129,13 @@ Clone the repository:
 git clone https://github.com/ChristianHillebrand/playwright-portfolio.git
 ```
 
-Navigate into the project directory:
+Navigate into the project:
 
 ```bash
 cd playwright-portfolio
 ```
 
-Install project dependencies:
+Install dependencies:
 
 ```bash
 npm install
@@ -82,42 +147,66 @@ Install the Chromium browser:
 npx playwright install chromium
 ```
 
-### Run All Tests
+Run the complete test suite:
 
 ```bash
-npm test
+npx playwright test
 ```
 
-### Run Tests with a Visible Browser
+Run API tests only:
 
 ```bash
-npm run test:headed
+npx playwright test api-tests/posts.spec.ts
 ```
 
-### View the HTML Test Report
+Run contact page tests only:
 
 ```bash
-npm run test:report
+npx playwright test tests/contact.spec.ts
 ```
 
-The HTML report provides a summary of test execution, including passed and failed tests.
+Run homepage tests only:
 
-## About Me
+```bash
+npx playwright test tests/homepage.spec.ts
+```
 
-I bring 21 years of experience in software Quality Assurance and customer support, including functional testing, regression testing, defect investigation, troubleshooting, technical documentation, and customer issue resolution.
+Run tests with one worker:
 
-Throughout my career, I have worked with complex software applications, investigated difficult application issues, collaborated with development teams, and helped ensure reliable software experiences for customers.
+```bash
+npx playwright test --workers=1
+```
 
-I am currently developing additional technical skills in:
+View the HTML test report:
 
-- JavaScript and TypeScript
-- Playwright UI automation
-- API testing with Postman
-- Automated testing practices
-- Git and GitHub workflows
+```bash
+npx playwright show-report
+```
 
-My goal is to combine my extensive hands-on QA and customer support experience with modern automation skills to contribute to software quality and reliable application delivery.
+## Learning & Development
 
-## Repository
+This portfolio is an ongoing project focused on developing practical automation engineering skills.
 
-[GitHub – Playwright QA Automation Portfolio](https://github.com/ChristianHillebrand/playwright-portfolio)
+Current learning areas include:
+
+- Playwright automation
+- TypeScript
+- JavaScript
+- REST API testing with Postman and Playwright
+- Test automation architecture
+- Reusable test frameworks
+- Test data management
+- Git and GitHub
+
+## Professional Background
+
+This project builds upon more than 21 years of professional experience in software quality assurance, customer support, troubleshooting, and software testing.
+
+The goal is to demonstrate the transition from extensive manual QA experience into modern automated software testing.
+
+## Project Status
+
+**Current status: 24 passing automated tests.**
+
+Additional automation scenarios, framework improvements, and testing techniques will be added as the project develops.
+
