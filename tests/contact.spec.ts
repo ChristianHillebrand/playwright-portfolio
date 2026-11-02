@@ -1,4 +1,5 @@
 import { test, expect } from './fixtures';
+import { validContactData, invalidContactData } from './test-data/contact.data';
 
 test('contact form has visible input fields', async ({ contactPage }) => {
   await expect(contactPage.contactForm).toBeVisible();
@@ -75,9 +76,10 @@ test('contact form displays validation errors for empty required fields', async 
 test('contact form rejects an invalid email address', async ({ contactPage }) => {
 
   // Complete the other fields with test data.
-  await contactPage.nameField.fill('Chris Test');
-  await contactPage.phoneField.fill('2525550123');
-  await contactPage.messageField.fill('Testing invalid email validation.');
+await contactPage.nameField.fill(invalidContactData.name);
+await contactPage.phoneField.fill(invalidContactData.phone);
+await contactPage.messageField.fill(invalidContactData.message);
+await contactPage.emailField.fill(invalidContactData.email);
 
   // Enter an invalid email address.
   await contactPage.emailField.fill('not-an-email');
@@ -108,10 +110,10 @@ test('contact form accepts valid input after validation errors', async ({ contac
   await expect(contactPage.emailValidationError).toBeVisible();
 
   // Enter valid test data.
-  await contactPage.nameField.fill('Chris Test');
-  await contactPage.emailField.fill('chris.test@example.com');
-  await contactPage.phoneField.fill('2525550123');
-  await contactPage.messageField.fill('Testing successful form validation.');
+  await contactPage.nameField.fill(validContactData.name);
+  await contactPage.emailField.fill(validContactData.email);
+  await contactPage.phoneField.fill(validContactData.phone);
+  await contactPage.messageField.fill(validContactData.message);
 
   // Submit the completed form.
   await contactPage.submitButton.click();
