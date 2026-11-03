@@ -1,5 +1,9 @@
 import { test, expect } from './fixtures';
-import { validContactData, invalidContactData } from './test-data/contact.data';
+import {
+  validContactData,
+  invalidContactData,
+  invalidEmailAddresses
+} from './test-data/contact.data';
 
 test('contact form has visible input fields', async ({ contactPage }) => {
   await expect(contactPage.contactForm).toBeVisible();
@@ -73,31 +77,27 @@ test('contact form displays validation errors for empty required fields', async 
   await expect(contactPage.emailValidationError).toBeVisible();
 });
 
-test('contact form rejects an invalid email address', async ({ contactPage }) => {
+for (const email of invalidEmailAddresses) {
+  test(`contact form rejects invalid email: ${email}`, async ({ contactPage }) => {
 
-  // Complete the other fields with test data.
-await contactPage.nameField.fill(invalidContactData.name);
-await contactPage.phoneField.fill(invalidContactData.phone);
-await contactPage.messageField.fill(invalidContactData.message);
-await contactPage.emailField.fill(invalidContactData.email);
+    await contactPage.nameField.fill(invalidContactData.name);
+    await contactPage.phoneField.fill(invalidContactData.phone);
+    await contactPage.messageField.fill(invalidContactData.message);
+    await contactPage.emailField.fill(email);
 
-  // Enter an invalid email address.
-  await contactPage.emailField.fill('not-an-email');
+    await contactPage.submitButton.click();
 
-  // Attempt to submit the form.
-  await contactPage.submitButton.click();
+    // Verify that the email validation error appears.
+    await expect(contactPage.emailValidationError).toBeVisible();
 
-  // Verify that the email validation error appears.
-  await expect(contactPage.emailValidationError).toBeVisible();
-
-  // Verify that no required-field errors appear.
-  await expect(
-    contactPage.contactForm.getByText('This field is required.', {
-      exact: true
-    })
-  ).toHaveCount(0);
-});
-
+    // Verify that no required-field errors appear.
+    await expect(
+      contactPage.contactForm.getByText('This field is required.', {
+        exact: true
+      })
+    ).toHaveCount(0);
+  });
+}
 
 
 test('contact form accepts valid input after validation errors', async ({ contactPage }) => {
@@ -126,3 +126,16 @@ test('contact form accepts valid input after validation errors', async ({ contac
 });
 
 
+test('contact form accepts long input values', async ({ contactPage }) => {
+
+  const longName = 'Chris '.repeat(50);
+  const longMessage = 'This is a boundary testing message. '.repeat(100);
+
+  await contactPage.nameField.fill(longName);
+  await contactPage.emailField.fill(validContactData.email);
+  await contactPage.phoneField.fill(validContactData.phone);
+  await contactPage.messageField.fill(longMessage);
+
+  await expect(contactPage.nameField).toHaveValue(longName);
+  await expect(contactPage.messageField).toHaveValue(longMessage);
+});

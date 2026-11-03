@@ -18,3 +18,10 @@ export const invalidContactData: ContactTestData = {
   phone: '2525550123',
   message: 'Testing invalid email validation.',
 };
+
+export const invalidEmailAddresses = [
+  'not-an-email',
+  'john@',
+  'john.example.com',
+  '@example.com',
+];
