@@ -1,15 +1,15 @@
 
 # Playwright Automation Portfolio
 
-A hands-on software test automation portfolio demonstrating UI testing, REST API testing, TypeScript, Playwright fixtures, Page Object Model (POM), reusable test data, and automated test reporting.
+A hands-on software test automation portfolio demonstrating UI automation, REST API testing, TypeScript, Playwright fixtures, Page Object Model (POM), data-driven testing, reusable test data, and automated test reporting.
 
 **GitHub Repository:** https://github.com/ChristianHillebrand/playwright-portfolio
 
 ## Project Overview
 
-This project demonstrates practical automation testing techniques using Playwright with TypeScript.
+This project demonstrates practical software test automation techniques using Playwright and TypeScript.
 
-The portfolio includes browser-based UI tests and REST API tests, with an emphasis on reusable code, maintainable test architecture, and reliable test execution.
+The portfolio includes browser-based UI tests and REST API tests, with an emphasis on reusable code, maintainable test architecture, functional validation, and reliable test execution.
 
 The project uses a practice e-commerce website and a demo REST API.
 
@@ -46,14 +46,15 @@ playwright-portfolio/
 │
 ├── playwright.config.ts
 ├── package.json
+├── package-lock.json
 └── .gitignore
 ```
 
 ## Automated Test Coverage
 
-**24 automated tests currently passing**
+**28 automated tests currently passing.**
 
-### 1. API Automation — 14 Tests
+### 1. REST API Automation — 14 Tests
 
 Using the JSONPlaceholder demo REST API:
 
@@ -70,16 +71,19 @@ Using the JSONPlaceholder demo REST API:
 
 **Note:** JSONPlaceholder is a simulated API. Its write operations do not persist data, and it accepts some incomplete or incorrectly typed payloads. The related tests document that behavior rather than demonstrate strict server-side validation.
 
-### 2. Contact Page UI Automation — 8 Tests
+### 2. Contact Page UI Automation — 12 Tests
 
 - Contact form visibility
 - Contact page navigation
 - Submit button visibility and enabled state
-- Form field input validation
+- Form field input handling
 - Required-field validation
 - Invalid email validation
+- Data-driven testing with multiple invalid email formats
 - Successful form submission
 - Validation error handling
+- Long-input and boundary testing
+- Verification that form fields retain entered values
 
 ### 3. Homepage UI Automation — 2 Tests
 
@@ -100,13 +104,17 @@ Implemented custom fixtures to initialize reusable page objects and navigate to 
 
 Separated test data from test logic using dedicated data files for API and UI testing.
 
+### Data-Driven Testing
+
+Used reusable arrays of invalid email addresses to execute the same validation scenario against multiple input formats.
+
 ### TypeScript Interfaces
 
 Implemented interfaces to define and enforce consistent test-data structures.
 
 ### Playwright Lifecycle Hooks
 
-Demonstrated all four major lifecycle hooks:
+Demonstrated Playwright lifecycle hooks, including:
 
 - `beforeAll()`
 - `beforeEach()`
@@ -150,7 +158,7 @@ npx playwright install chromium
 Run the complete test suite:
 
 ```bash
-npx playwright test
+npm test
 ```
 
 Run API tests only:
@@ -180,7 +188,7 @@ npx playwright test --workers=1
 View the HTML test report:
 
 ```bash
-npx playwright show-report
+npm run test:report
 ```
 
 ## Learning & Development
@@ -194,19 +202,27 @@ Current learning areas include:
 - JavaScript
 - REST API testing with Postman and Playwright
 - Test automation architecture
-- Reusable test frameworks
+- Page Object Model
+- Data-driven testing
 - Test data management
+- Functional and regression testing
 - Git and GitHub
 
 ## Professional Background
 
-This project builds upon more than 21 years of professional experience in software quality assurance, customer support, troubleshooting, and software testing.
+This project builds upon 21 years of professional experience in software quality assurance, customer support, troubleshooting, and software testing.
 
-The goal is to demonstrate the transition from extensive manual QA experience into modern automated software testing.
+It demonstrates the development of hands-on automation skills and the application of established QA experience to modern automated software testing.
 
 ## Project Status
 
-**Current status: 24 passing automated tests.**
+**Current status: 28 passing automated tests.**
 
-Additional automation scenarios, framework improvements, and testing techniques will be added as the project develops.
+| Test Category | Passing Tests |
+|---|---:|
+| REST API Automation | 14 |
+| Contact Page UI Automation | 12 |
+| Homepage UI Automation | 2 |
+| **Total** | **28** |
 
+The project continues to evolve with additional automation scenarios, framework improvements, and testing techniques.
