@@ -1,7 +1,7 @@
 
 # Playwright Automation Portfolio
 
-A hands-on software test automation portfolio demonstrating UI automation, REST API testing, TypeScript, Playwright fixtures, Page Object Model (POM), data-driven testing, reusable test data, and automated test reporting.
+A hands-on software test automation portfolio demonstrating UI automation, REST API testing, TypeScript, Playwright fixtures, Page Object Model (POM), data-driven testing, reusable test data, reusable API helper functions, and automated test reporting.
 
 **GitHub Repository:** https://github.com/ChristianHillebrand/playwright-portfolio
 
@@ -30,9 +30,11 @@ The project uses a practice website and a demo REST API.
 playwright-portfolio/
 │
 ├── api-tests/
-│   ├── posts.spec.ts
-│   └── test-data/
-│       └── posts.data.ts
+│   ├── helpers/
+│   │   └── apiHelpers.ts
+│   ├── test-data/
+│   │   └── posts.data.ts
+│   └── posts.spec.ts
 │
 ├── pages/
 │   └── ContactPage.ts
@@ -70,6 +72,7 @@ Using the JSONPlaceholder demo REST API:
 - Testing API behavior with incorrect data types
 - Testing update requests for nonexistent records
 - Validating server error responses and error messages
+- Reusable API helper functions for GET, POST, PUT, and DELETE requests
 
 **Note:** JSONPlaceholder is a simulated API. Its write operations do not persist data, and it accepts some incomplete or incorrectly typed payloads. The nonexistent-record update test documents an observed HTTP 500 response and server error message. This represents the demo API's behavior, not desirable production API behavior.
 
@@ -103,6 +106,19 @@ Implemented a reusable `ContactPage` class to centralize page locators and navig
 ### Custom Playwright Fixtures
 
 Implemented custom fixtures to initialize reusable page objects and navigate to the required application page.
+
+### Reusable API Helper Functions
+
+Created an `apiHelpers.ts` module to centralize common API request operations.
+
+The module includes reusable functions for:
+
+- `getPost()` — Retrieve a post using a GET request.
+- `createPost()` — Create a post using a POST request.
+- `updatePost()` — Update a post using a PUT request.
+- `deletePost()` — Delete a post using a DELETE request.
+
+These functions reduce duplicated request code and help keep API test cases organized and maintainable.
 
 ### Reusable Test Data
 
@@ -207,6 +223,7 @@ Current learning areas include:
 - REST API testing with Postman and Playwright
 - Test automation architecture
 - Page Object Model
+- Reusable API helper functions
 - Data-driven testing
 - Test data management
 - Functional and regression testing

@@ -1,12 +1,16 @@
 
 import { test, expect } from '@playwright/test';
 import { postTestData } from './test-data/posts.data';
+import {
+  getPost,
+  createPost,
+  updatePost,
+  deletePost,
+} from './helpers/apiHelpers';
 
 // 1. GET: Retrieve a post and validate its data
 test('API returns a successful response with valid post data', async ({ request }) => {
-  const response = await request.get(
-    'https://jsonplaceholder.typicode.com/posts/1'
-  );
+  const response = await getPost(request, 1);
 
   expect(response.status()).toBe(200);
 
@@ -23,25 +27,18 @@ test('API returns a successful response with valid post data', async ({ request 
 
 // 2. GET: Verify a nonexistent post returns 404
 test('API returns 404 for a post that does not exist', async ({ request }) => {
-  const response = await request.get(
-    'https://jsonplaceholder.typicode.com/posts/9999'
-  );
+  const response = await getPost(request, 9999);
 
   expect(response.status()).toBe(404);
 });
 
 // 3. POST: Create a new post
 test('API creates a new post', async ({ request }) => {
-  const response = await request.post(
-    'https://jsonplaceholder.typicode.com/posts',
-    {
-      data: {
-        title: 'My First API Test',
-        body: 'Learning API validation with Playwright',
-        userId: 1,
-      },
-    }
-  );
+  const response = await createPost(request, {
+    title: 'My First API Test',
+    body: 'Learning API validation with Playwright',
+    userId: 1,
+  });
 
   expect(response.status()).toBe(201);
 
@@ -55,17 +52,12 @@ test('API creates a new post', async ({ request }) => {
 
 // 4. PUT: Update an existing post
 test('API updates an existing post', async ({ request }) => {
-  const response = await request.put(
-    'https://jsonplaceholder.typicode.com/posts/1',
-    {
-      data: {
-        id: 1,
-        title: 'Updated API Test',
-        body: 'Testing an updated post with Playwright',
-        userId: 1,
-      },
-    }
-  );
+  const response = await updatePost(request, 1, {
+    id: 1,
+    title: 'Updated API Test',
+    body: 'Testing an updated post with Playwright',
+    userId: 1,
+  });
 
   expect(response.status()).toBe(200);
 
@@ -79,18 +71,14 @@ test('API updates an existing post', async ({ request }) => {
 
 // 5. DELETE: Delete an existing post
 test('API deletes an existing post', async ({ request }) => {
-  const response = await request.delete(
-    'https://jsonplaceholder.typicode.com/posts/1'
-  );
+  const response = await deletePost(request, 1);
 
   expect(response.status()).toBe(200);
 });
 
 // 6. GET: Validate response content type
 test('API returns the correct content type header', async ({ request }) => {
-  const response = await request.get(
-    'https://jsonplaceholder.typicode.com/posts/1'
-  );
+  const response = await getPost(request, 1);
 
   expect(response.status()).toBe(200);
 
@@ -101,9 +89,7 @@ test('API returns the correct content type header', async ({ request }) => {
 
 // 7. GET: Validate required response properties
 test('API response contains all required post properties', async ({ request }) => {
-  const response = await request.get(
-    'https://jsonplaceholder.typicode.com/posts/1'
-  );
+  const response = await getPost(request, 1);
 
   expect(response.status()).toBe(200);
 
@@ -122,9 +108,7 @@ test('API response contains all required post properties', async ({ request }) =
 // 8-12. Data-driven GET tests using reusable test data
 for (const post of postTestData) {
   test(`API validates post record ${post.id}`, async ({ request }) => {
-    const response = await request.get(
-      `https://jsonplaceholder.typicode.com/posts/${post.id}`
-    );
+    const response = await getPost(request, post.id);
 
     expect(response.status()).toBe(200);
 
@@ -175,23 +159,14 @@ test('API handles a post with an invalid title data type', async ({ request }) =
   expect(post.title).toBe(12345);
 });
 
-
 // 15. Negative test: Update a post that does not exist
-// 15. Negative test: Update a post that does not exist
-
- // 15. Negative test: Update a post that does not exist
 test('API returns a server error when updating a nonexistent post', async ({ request }) => {
-  const response = await request.put(
-    'https://jsonplaceholder.typicode.com/posts/9999',
-    {
-      data: {
-        id: 9999,
-        title: 'Nonexistent Post',
-        body: 'Testing an update for a post that does not exist',
-        userId: 1,
-      },
-    }
-  );
+  const response = await updatePost(request, 9999, {
+    id: 9999,
+    title: 'Nonexistent Post',
+    body: 'Testing an update for a post that does not exist',
+    userId: 1,
+  });
 
   expect(response.status()).toBe(500);
 
