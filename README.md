@@ -1,7 +1,7 @@
 
 # Playwright Automation Portfolio
 
-A hands-on software test automation portfolio demonstrating UI automation, REST API testing, TypeScript, Playwright fixtures, Page Object Model (POM), data-driven testing, reusable test data, reusable API helper functions, and automated test reporting.
+A hands-on software test automation portfolio demonstrating UI automation, REST API testing, TypeScript, Playwright fixtures, Page Object Model (POM), data-driven testing, reusable test data, reusable API helper functions, response validation, and automated test reporting.
 
 **GitHub Repository:** https://github.com/ChristianHillebrand/playwright-portfolio
 
@@ -9,7 +9,7 @@ A hands-on software test automation portfolio demonstrating UI automation, REST 
 
 This project demonstrates practical software test automation techniques using Playwright and TypeScript.
 
-The portfolio includes browser-based UI tests and REST API tests, with an emphasis on reusable code, maintainable test architecture, functional validation, and reliable test execution.
+The portfolio includes browser-based UI tests and REST API tests, with an emphasis on reusable code, maintainable test architecture, functional validation, negative testing, and reliable test execution.
 
 The project uses a practice website and a demo REST API.
 
@@ -54,9 +54,9 @@ playwright-portfolio/
 
 ## Automated Test Coverage
 
-**31 automated tests currently passing.**
+**32 automated tests currently passing.**
 
-### 1. REST API Automation — 15 Tests
+### 1. REST API Automation — 16 Tests
 
 Using the JSONPlaceholder demo REST API:
 
@@ -72,7 +72,10 @@ Using the JSONPlaceholder demo REST API:
 - Testing API behavior with incorrect data types
 - Testing update requests for nonexistent records
 - Validating server error responses and error messages
+- Invalid post ID format testing
 - Reusable API helper functions for GET, POST, PUT, and DELETE requests
+- Reusable API response validation functions
+- Centralized response status and required-property assertions
 
 **Note:** JSONPlaceholder is a simulated API. Its write operations do not persist data, and it accepts some incomplete or incorrectly typed payloads. The nonexistent-record update test documents an observed HTTP 500 response and server error message. This represents the demo API's behavior, not desirable production API behavior.
 
@@ -120,6 +123,17 @@ The module includes reusable functions for:
 
 These functions reduce duplicated request code and help keep API test cases organized and maintainable.
 
+### Reusable API Response Validation
+
+Implemented a `validatePostResponse()` function to centralize common API response assertions.
+
+The helper:
+
+- Validates the expected HTTP status code.
+- Parses the JSON response.
+- Verifies the presence of required post properties.
+- Reduces repetitive assertions across API tests.
+
 ### Reusable Test Data
 
 Separated test data from test logic using dedicated data files for API and UI testing.
@@ -127,6 +141,16 @@ Separated test data from test logic using dedicated data files for API and UI te
 ### Data-Driven Testing
 
 Used reusable arrays of invalid email addresses to execute the same validation scenario against multiple input formats.
+
+### Negative Testing
+
+Added negative API scenarios to evaluate how the demo API handles:
+
+- Missing request fields
+- Incorrect data types
+- Nonexistent records
+- Invalid post ID formats
+- Server error responses
 
 ### TypeScript Interfaces
 
@@ -224,7 +248,9 @@ Current learning areas include:
 - Test automation architecture
 - Page Object Model
 - Reusable API helper functions
+- Reusable response validation
 - Data-driven testing
+- Negative testing
 - Test data management
 - Functional and regression testing
 - Git and GitHub
@@ -237,14 +263,14 @@ It demonstrates the development of hands-on automation skills and the applicatio
 
 ## Project Status
 
-**Current status: 31 passing automated tests.**
+**Current status: 32 passing automated tests.**
 
 | Test Category | Passing Tests |
 |---|---:|
-| REST API Automation | 15 |
+| REST API Automation | 16 |
 | Contact Page UI Automation | 12 |
 | Homepage UI Automation | 4 |
-| **Total** | **31** |
+| **Total** | **32** |
 
 The project continues to evolve with additional automation scenarios, framework improvements, and testing techniques.
 

@@ -6,6 +6,7 @@ import {
   createPost,
   updatePost,
   deletePost,
+  validatePostResponse,
 } from './helpers/apiHelpers';
 
 // 1. GET: Retrieve a post and validate its data
@@ -88,22 +89,14 @@ test('API returns the correct content type header', async ({ request }) => {
 });
 
 // 7. GET: Validate required response properties
+
+// 7. GET: Validate required response properties using reusable helper
 test('API response contains all required post properties', async ({ request }) => {
   const response = await getPost(request, 1);
 
-  expect(response.status()).toBe(200);
-
-  const post = await response.json();
-
-  expect(post).toHaveProperty('userId');
-  expect(post).toHaveProperty('id');
-  expect(post).toHaveProperty('title');
-  expect(post).toHaveProperty('body');
-
-  expect(Object.keys(post)).toEqual(
-    expect.arrayContaining(['userId', 'id', 'title', 'body'])
-  );
+  await validatePostResponse(response, 200);
 });
+
 
 // 8-12. Data-driven GET tests using reusable test data
 for (const post of postTestData) {
@@ -175,3 +168,12 @@ test('API returns a server error when updating a nonexistent post', async ({ req
   expect(responseBody).toContain('Cannot read properties of undefined');
 });
 
+
+// 16. Negative test: Request a post using an invalid ID format
+test('API handles a request with an invalid post ID format', async ({ request }) => {
+  const response = await request.get(
+    'https://jsonplaceholder.typicode.com/posts/invalid'
+  );
+
+  expect(response.status()).toBe(404);
+});

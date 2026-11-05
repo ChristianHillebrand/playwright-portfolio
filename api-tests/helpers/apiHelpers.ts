@@ -1,5 +1,4 @@
-
-import { APIRequestContext, APIResponse } from '@playwright/test';
+import { APIRequestContext, APIResponse, expect } from '@playwright/test';
 
 const BASE_URL = 'https://jsonplaceholder.typicode.com';
 
@@ -43,4 +42,19 @@ export async function deletePost(
   postId: number
 ): Promise<APIResponse> {
   return await request.delete(`${BASE_URL}/posts/${postId}`);
+}
+
+
+export async function validatePostResponse(
+  response: APIResponse,
+  expectedStatus: number
+): Promise<void> {
+  expect(response.status()).toBe(expectedStatus);
+
+  const post = await response.json();
+
+  expect(post).toHaveProperty('userId');
+  expect(post).toHaveProperty('id');
+  expect(post).toHaveProperty('title');
+  expect(post).toHaveProperty('body');
 }
