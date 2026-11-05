@@ -52,9 +52,9 @@ playwright-portfolio/
 
 ## Automated Test Coverage
 
-**30 automated tests currently passing.**
+**31 automated tests currently passing.**
 
-### 1. REST API Automation — 14 Tests
+### 1. REST API Automation — 15 Tests
 
 Using the JSONPlaceholder demo REST API:
 
@@ -68,8 +68,10 @@ Using the JSONPlaceholder demo REST API:
 - Data-driven API testing
 - Testing API behavior with missing fields
 - Testing API behavior with incorrect data types
+- Testing update requests for nonexistent records
+- Validating server error responses and error messages
 
-**Note:** JSONPlaceholder is a simulated API. Its write operations do not persist data, and it accepts some incomplete or incorrectly typed payloads. The related tests document that behavior rather than demonstrate strict server-side validation.
+**Note:** JSONPlaceholder is a simulated API. Its write operations do not persist data, and it accepts some incomplete or incorrectly typed payloads. The nonexistent-record update test documents an observed HTTP 500 response and server error message. This represents the demo API's behavior, not desirable production API behavior.
 
 ### 2. Contact Page UI Automation — 12 Tests
 
@@ -218,13 +220,14 @@ It demonstrates the development of hands-on automation skills and the applicatio
 
 ## Project Status
 
-**Current status: 30 passing automated tests.**
+**Current status: 31 passing automated tests.**
 
 | Test Category | Passing Tests |
 |---|---:|
-| REST API Automation | 14 |
+| REST API Automation | 15 |
 | Contact Page UI Automation | 12 |
 | Homepage UI Automation | 4 |
-| **Total** | **30** |
+| **Total** | **31** |
 
 The project continues to evolve with additional automation scenarios, framework improvements, and testing techniques.
+

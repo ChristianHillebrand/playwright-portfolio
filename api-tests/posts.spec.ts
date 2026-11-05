@@ -174,3 +174,29 @@ test('API handles a post with an invalid title data type', async ({ request }) =
 
   expect(post.title).toBe(12345);
 });
+
+
+// 15. Negative test: Update a post that does not exist
+// 15. Negative test: Update a post that does not exist
+
+ // 15. Negative test: Update a post that does not exist
+test('API returns a server error when updating a nonexistent post', async ({ request }) => {
+  const response = await request.put(
+    'https://jsonplaceholder.typicode.com/posts/9999',
+    {
+      data: {
+        id: 9999,
+        title: 'Nonexistent Post',
+        body: 'Testing an update for a post that does not exist',
+        userId: 1,
+      },
+    }
+  );
+
+  expect(response.status()).toBe(500);
+
+  const responseBody = await response.text();
+
+  expect(responseBody).toContain('Cannot read properties of undefined');
+});
+
