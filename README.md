@@ -11,7 +11,7 @@ This project demonstrates practical software test automation techniques using Pl
 
 The portfolio includes browser-based UI tests and REST API tests, with an emphasis on reusable code, maintainable test architecture, functional validation, and reliable test execution.
 
-The project uses a practice e-commerce website and a demo REST API.
+The project uses a practice website and a demo REST API.
 
 ## Technologies & Tools
 
@@ -52,7 +52,7 @@ playwright-portfolio/
 
 ## Automated Test Coverage
 
-**28 automated tests currently passing.**
+**30 automated tests currently passing.**
 
 ### 1. REST API Automation — 14 Tests
 
@@ -85,10 +85,12 @@ Using the JSONPlaceholder demo REST API:
 - Long-input and boundary testing
 - Verification that form fields retain entered values
 
-### 3. Homepage UI Automation — 2 Tests
+### 3. Homepage UI Automation — 4 Tests
 
 - Homepage title verification
 - About page navigation
+- Visible heading verification
+- Homepage navigation visibility and link-destination validation
 
 ## Automation Architecture
 
@@ -216,13 +218,13 @@ It demonstrates the development of hands-on automation skills and the applicatio
 
 ## Project Status
 
-**Current status: 28 passing automated tests.**
+**Current status: 30 passing automated tests.**
 
 | Test Category | Passing Tests |
 |---|---:|
 | REST API Automation | 14 |
 | Contact Page UI Automation | 12 |
-| Homepage UI Automation | 2 |
-| **Total** | **28** |
+| Homepage UI Automation | 4 |
+| **Total** | **30** |
 
 The project continues to evolve with additional automation scenarios, framework improvements, and testing techniques.
